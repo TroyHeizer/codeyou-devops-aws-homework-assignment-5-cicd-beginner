@@ -27,8 +27,8 @@ jobs:
         pip install -r requirements.txt
         pip install safety
 
-    - name: Run Safety scan (without authentication)
-      run: safety check --ignore-virtualenv --skip
+    - name: Run Safety scan
+      run: safety check --full-report
 
     - name: Run tests
       run: |
