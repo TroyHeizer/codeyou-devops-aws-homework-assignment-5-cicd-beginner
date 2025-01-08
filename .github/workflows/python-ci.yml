@@ -40,3 +40,8 @@ jobs:
         run: |
           pip install bandit
           bandit -r .
+
+      - name: Push changes using GitHub token
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.token }}@github.com/${{ github.repository }}.git
+          git push origin main
