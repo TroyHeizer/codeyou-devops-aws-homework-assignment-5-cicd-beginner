@@ -26,6 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest  # Added pytest installation
+        pip install safety  # Explicitly install Safety CLI
 
     - name: Authenticate with Safety CLI
       run: echo "SAFETY_API_KEY=${{ secrets.SAFETY_API_KEY }}" >> $GITHUB_ENV
@@ -39,4 +40,3 @@ jobs:
 
     - name: Upload coverage results
       uses: codecov/codecov-action@v3
-
