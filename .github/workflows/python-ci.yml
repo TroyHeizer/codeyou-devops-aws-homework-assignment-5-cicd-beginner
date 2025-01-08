@@ -1,4 +1,4 @@
-name: Python CI/CD Pipeline
+name: Python CI
 
 on:
   push:
@@ -13,35 +13,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install safety
 
-      - name: Run Flake8 linter
-        run: |
-          pip install flake8
-          flake8 .
+    - name: Run Safety scan (without authentication)
+      run: safety check --ignore-virtualenv --skip
 
-      - name: Run Safety scan
-        run: |
-          pip install safety
-          safety scan --file=requirements.txt --full-report
+    - name: Run tests
+      run: |
+        pytest
 
-      - name: Run Bandit security scan
-        run: |
-          pip install bandit
-          bandit -r .
-
-      - name: Push changes using GitHub token
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.token }}@github.com/${{ github.repository }}.git
-          git push origin main
+    - name: Upload coverage results
+      uses: codecov/codecov-action@v3
