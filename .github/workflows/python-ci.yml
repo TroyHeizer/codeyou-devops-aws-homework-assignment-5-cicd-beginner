@@ -31,10 +31,10 @@ jobs:
           pip install flake8
           flake8 .
 
-      - name: Run Safety check
+      - name: Run Safety scan
         run: |
           pip install safety
-          safety check --file=requirements.txt --full-report
+          safety scan --file=requirements.txt --full-report
 
       - name: Run Bandit security scan
         run: |
