@@ -28,7 +28,7 @@ jobs:
         pip install safety
 
     - name: Run Safety scan
-      run: safety check --skip
+      run: safety check
 
     - name: Run tests
       run: |
