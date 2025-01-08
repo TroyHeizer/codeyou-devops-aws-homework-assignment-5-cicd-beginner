@@ -27,6 +27,9 @@ jobs:
         pip install -r requirements.txt
         pip install safety
 
+    - name: Authenticate with Safety CLI
+      run: echo "SAFETY_API_KEY=${{ secrets.SAFETY_API_KEY }}" >> $GITHUB_ENV
+
     - name: Run Safety scan
       run: safety scan
 
